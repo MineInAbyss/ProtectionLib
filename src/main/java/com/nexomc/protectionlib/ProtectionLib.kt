@@ -1,6 +1,7 @@
 package com.nexomc.protectionlib
 
 import com.nexomc.protectionlib.compatibilities.BentoBoxCompat
+import com.nexomc.protectionlib.compatibilities.CartridgeCompat
 import com.nexomc.protectionlib.compatibilities.CrashClaimCompat
 import com.nexomc.protectionlib.compatibilities.FactionsUuidCompat
 import com.nexomc.protectionlib.compatibilities.GriefPreventionCompat
@@ -38,6 +39,7 @@ object ProtectionLib {
         handleCompatibility("HuskTowns", plugin, ::HuskTownsCompat)
         handleCompatibility("Residence", plugin, ::ResidenceCompat)
         handleCompatibility("NoBuildPlus", plugin, ::NoBuildPlusCompat)
+        handleCartridgeCompatibility(plugin)
     }
 
     @JvmStatic
@@ -73,6 +75,15 @@ object ProtectionLib {
             val plugin = Bukkit.getPluginManager().getPlugin(pluginName) as? T ?: return
             if (pluginName == "Factions" && !checkFactionsCompat()) return
             compatibilities.add(constructor.create(mainPlugin, plugin) ?: return@runCatching)
+        }.onFailure {
+            if (debug) it.printStackTrace()
+        }
+    }
+
+    private fun handleCartridgeCompatibility(mainPlugin: JavaPlugin) {
+        runCatching {
+            Class.forName("com.mineinabyss.cartridge.region.Regions")
+            compatibilities.add(CartridgeCompat(mainPlugin))
         }.onFailure {
             if (debug) it.printStackTrace()
         }

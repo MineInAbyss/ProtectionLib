@@ -43,7 +43,11 @@ repositories {
     maven("https://repo.william278.net/releases")
 }
 
+val cartridgeStub: SourceSet by sourceSets.creating
+
 dependencies {
+    "cartridgeStubCompileOnly"(libs.paper.api)
+    compileOnly(cartridgeStub.output)
     compileOnly(libs.factions) {
         exclude("org.kitteh:paste-gg-api")
         exclude("com.darkblade12:particleeffect")
