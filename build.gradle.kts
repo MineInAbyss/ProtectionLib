@@ -62,7 +62,7 @@ dependencies {
     compileOnly(libs.lands)
     compileOnly(libs.bentobox)
     compileOnly(libs.towny)
-    compileOnly(idofrontLibs.minecraft.plugin.worldguard)
+    compileOnly(libs.worldguard)
 }
 
 publishing {

@@ -6,6 +6,7 @@ lands="7.10.13"
 bentobox="2.0.0-SNAPSHOT"
 towny="0.100.1.0"
 factions="1.6.9.5-U0.6.11"
+worldguard="7.0.13"
 
 [libraries]
 crashclaim = { module = "net.crashcraft:CrashClaim", version.ref = "crashclaim" }
@@ -15,3 +16,4 @@ lands = { module = "com.github.angeschossen:LandsAPI", version.ref = "lands" }
 bentobox = { module = "world.bentobox:bentobox", version.ref = "bentobox" }
 towny = { module = "com.palmergames.bukkit.towny:towny", version.ref = "towny" }
 factions = { module = "com.massivecraft:Factions", version.ref = "factions" }
+worldguard = { module = "com.sk89q.worldguard:worldguard-bukkit", version.ref = "worldguard" }
