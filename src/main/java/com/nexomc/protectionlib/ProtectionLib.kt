@@ -24,9 +24,13 @@ object ProtectionLib {
     private val compatibilities: MutableSet<ProtectionCompatibility<out Plugin>> = ObjectOpenHashSet()
     @JvmField
     var debug: Boolean = false
+    private var initialized = false
 
+    // Idofront and Nexo share one copy on MiA and both call init
     @JvmStatic
     fun init(plugin: JavaPlugin) {
+        if (initialized) return
+        initialized = true
         handleCompatibility("WorldGuard", plugin, ::WorldGuardCompat)
         handleCompatibility("Towny", plugin, ::TownyCompat)
         handleCompatibility("Factions", plugin, ::FactionsUuidCompat)
