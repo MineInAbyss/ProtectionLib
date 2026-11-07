@@ -1,33 +1,9 @@
-import java.io.ByteArrayOutputStream
-
 plugins {
-    id("java")
-    id("maven-publish")
     alias(idofrontLibs.plugins.mia.kotlin.jvm)
     alias(idofrontLibs.plugins.mia.papermc)
+    alias(idofrontLibs.plugins.mia.publication)
     alias(idofrontLibs.plugins.mia.autoversion)
 }
-
-val gitBranch: String by lazy {
-    val output = ByteArrayOutputStream()
-    exec {
-        commandLine = listOf("git", "rev-parse", "--abbrev-ref", "HEAD")
-        standardOutput = output
-    }
-    output.toString().trim()
-}
-
-val gitHash: String by lazy {
-    val output = ByteArrayOutputStream()
-    exec {
-        commandLine = listOf("git", "rev-parse", "--short", "HEAD")
-        standardOutput = output
-    }
-    output.toString().trim()
-}
-
-val pluginVersion: String = project.property("version").toString().let { if (gitBranch == "master") it.removeSuffix("-dev") else it }
-version = pluginVersion
 
 repositories {
     mavenCentral()
@@ -67,27 +43,4 @@ dependencies {
     compileOnly(libs.bentobox)
     compileOnly(libs.towny)
     compileOnly(libs.worldguard)
-}
-
-publishing {
-    repositories {
-        maven {
-            val repo = "https://repo.nexomc.com/"
-            val isSnapshot = System.getenv("IS_SNAPSHOT") == "true"
-            val url = if (isSnapshot) repo + "snapshots" else repo + "releases"
-            setUrl(url)
-            credentials {
-                username = project.findProperty("mineinabyssMavenUsername") as String?
-                password = project.findProperty("mineinabyssMavenPassword") as String?
-            }
-        }
-    }
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            groupId = rootProject.group.toString()
-            artifactId = rootProject.name
-            version = rootProject.version.toString()
-        }
-    }
 }

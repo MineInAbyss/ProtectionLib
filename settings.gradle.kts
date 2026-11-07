@@ -1,8 +1,6 @@
 rootProject.name = "protectionlib"
 
 pluginManagement {
-    val idofrontVersion: String by settings
-
     repositories {
         gradlePluginPortal()
         mavenCentral()
@@ -11,11 +9,6 @@ pluginManagement {
         maven("https://repo.mineinabyss.com/snapshots")
         maven("https://repo.papermc.io/repository/maven-public/")
         mavenLocal()
-    }
-
-    resolutionStrategy.eachPlugin {
-        if (requested.id.id.startsWith("com.mineinabyss.conventions"))
-            useVersion(idofrontVersion)
     }
 }
 
